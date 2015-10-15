@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Angular Table</title>
+    <link rel="stylesheet" href="resources/table_style.css">
+    <link rel="stylesheet" href="resources/bootstrap-3.2.0-dist/css/bootstrap.css">
+    <script type="text/javascript" src="scripts/angular.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <style>
+        #navlist li {
+            display: inline;
+            list-style-type: none;
+            padding-right: 5px;
+        }
+        .selected-page {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <hgroup>
+            <h2>Simple Angular Table</h2>
+            <h3>Sortable, Searchable and Editable and Angular Grid</h3>
+        </hgroup>
+    </header>
+    <br />
+    <div ng-app="myApp">
+        <div ng-controller="dataController">
+            <div>                
+                <h4>Search by First Name, LastName or Country</h4>
+                <p><input type="text" ng-model='searchText' ng-blur="onBlur()" ng-keypress="keyPress()"></p>
+            </div>
+            <table id="example" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th ng-click="sort('id')">Id</th>
+                        <th ng-click="sort('first_name')">First Name</th>
+                        <th ng-click="sort('last_name')">Last Name</th>
+                        <th ng-click="sort('email')">Email</th>
+                        <th ng-click="sort('country')">Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in pagedList[currentPage]">
+                        <td>
+                            {{ item.id }}
+                        </td>
+                        <td>                          
+                            <input type="text" name="id" ng-model='item.first_name'>
+                        </td>
+                        <td>                           
+                            <input type="text" name="id" ng-model='item.last_name'>
+                        </td>
+                        <td>                           
+                            <input type="text" name="id" ng-model='item.email'>
+                        </td>
+                        <td>                            
+                            <input type="text" name="id" ng-model='item.country'>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <ul id="navlist">
+                                <li ng-repeat="item in pagedList"><input type="button" ng-click="paginateOnClick($index)" value="{{($index + 1)}}" ng-class="{ 'selected-page': $index == currentPage }" /></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" ng-click="submitOnClick()" id="submit">Submit</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
