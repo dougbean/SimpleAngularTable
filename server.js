@@ -6,15 +6,6 @@ var express = require("express");
      res.sendfile('index.html');
  });
  
- app.get("/inventory/", function(req, res) {
-    res.sendfile('inventory.html')
- });
- 
-  app.post("/user/add", function(req, res) { 
-    /* some server side logic */
-    res.send("OK");
-  });
- 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
      console.log('static file request : ' + req.params);
