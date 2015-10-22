@@ -5,6 +5,7 @@
 	app.controller("dataController",  ['$scope',  '$http', function($scope, $http) {
 		
 		var users = []; 
+		var filtered = [];
 		var reverseSort = false;
 		
 		$scope.currentPage = 0; 
@@ -26,7 +27,7 @@
 		
 		function setPagination() {
 
-			var filtered = search($scope.searchText);
+			filtered = search($scope.searchText);
 
 			if (filtered.length > 0) {
 				paginate(filtered);
@@ -107,15 +108,30 @@
 		}
 		
 		$scope.sort = function(header){
-		   if(reverseSort === false){
-			  users = sortByKeyAscending(users, header);
-			  reverseSort = true;
-		   }else{
-			  users = sortByKeyDescending(users, header);
-			  reverseSort = false;
+			sort(header);
+		}; 
+
+		function sort(header){
+			if (filtered.length > 0) {
+				  sortList(filtered, header)
+				  paginate(filtered);
+			} else {
+				if (users.length > 0 && $scope.itemsPerPage > 0) {
+					 sortList(users, header)
+					 paginate(users);
+				}
 			}
-			paginate(users);
-		};  
+		}
+		
+	   function sortList(list, header){
+			if(reverseSort === false){
+				sortByKeyAscending(list, header);
+				reverseSort = true;
+			}else{
+				sortByKeyDescending(list, header);
+				reverseSort = false;
+			}
+		}
 		  
 		function sortByKeyAscending(array, key) {
 			return array.sort(function(a, b) {
@@ -148,6 +164,7 @@
 		 };
 
 		 /* get mock data from local function */
+		 
 	     users = getData();
 		 if(users.length > 0 && $scope.itemsPerPage > 0)
 		  {
@@ -172,10 +189,11 @@
 			 { "id": 15, "first_name": "Aaron", "last_name": "Hart", "email": "ahart2r@examiner.com", "country": "Argentina" }];
 			 return data;
 		 } 
+		 
 		/* get mock data from local function */
 
 		/* use $http to get data */
-		/*
+		/* 
 		$http.get('data.json').success(function(data) {
 
 		   users = data;
@@ -184,7 +202,7 @@
 			 {
 				paginate(users);
 			 }
-		});
+		}); 
 		*/
 		/* use $http to get data */
 	}]);
