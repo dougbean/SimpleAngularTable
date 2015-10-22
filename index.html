@@ -65,7 +65,7 @@
                     <tr>
                         <td>
                             <ul id="navlist">
-                                <li ng-repeat="item in pagedList"><input type="button" ng-click="paginateOnClick($index)" value="{{($index + 1)}}" ng-class="{ 'selected-page': $index == currentPage }" /></li>
+                                <li ng-repeat="item in pagedList"><input type="button" ng-click="setPage($index)" value="{{($index + 1)}}" ng-class="{ 'selected-page': $index == currentPage }" /></li>
                             </ul>
                         </td>
                     </tr>
